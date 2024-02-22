@@ -9,4 +9,5 @@ int main(void) {
 		vec.push_back(i);
 	}
 	easyfind(vec, -3);
+	easyfind(vec, 3);
 }

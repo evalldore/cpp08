@@ -3,6 +3,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include <exception>
 
 template<typename T>
 int easyfind(T& var, int num) {
