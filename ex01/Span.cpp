@@ -1,4 +1,6 @@
 #include <iostream>
+#include <limits>
+#include <cstdlib>
 #include "Span.hpp"
 
 //constructors/destructors
@@ -10,7 +12,7 @@ Span::~Span(void){
 
 }
 
-Span::Span(unsigned int size): _size(0) {
+Span::Span(unsigned int size): _size(size) {
 	
 }
 
@@ -20,7 +22,7 @@ Span::Span(const Span& other): _size(other._size) {
 
 //methods
 
-void	Span::addNumber(int num) {
+void Span::addNumber(int num) {
 	if (_list.size() >= _size) {
 		throw InvalidNumbersException();
 		return;
@@ -28,13 +30,22 @@ void	Span::addNumber(int num) {
 	_list.push_back(num);
 }
 
-unsigned int	Span::shortestSpan(void) {
+unsigned int Span::shortestSpan(void) {
 	if (_list.size() < 2) {
 		throw InvalidNumbersException();
 		return 0;
 	}
-	int shortSpan = 0;
-	return (shortSpan);
+	unsigned int shortSpan = UINT32_MAX;
+	unsigned int distAbs;
+	std::list<int>::iterator ptr[2];
+	for (ptr[0] = _list.begin(); ptr[0] < _list.end(); ptr[0]++) {
+		for (ptr[1] = _list.begin(); ptr[1] < _list.end(); ptr[1]++) {
+			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
+			if (distAbs < shortSpan)
+				shortSpan = distAbs;
+		}
+	}
+	return shortSpan;
 }
 
 unsigned int	Span::longestSpan(void) {
@@ -43,7 +54,22 @@ unsigned int	Span::longestSpan(void) {
 		return 0;
 	}
 	int longSpan = 0;
-	return (longSpan);
+	unsigned int distAbs;
+	std::list<int>::iterator ptr[2];
+	for (ptr[0] = _list.begin(); ptr[0] < _list.end(); ptr[0]++) {
+		for (ptr[1] = _list.begin(); ptr[1] < _list.end(); ptr[1]++) {
+			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
+			if (distAbs > longSpan)
+				longSpan = distAbs;
+		}
+	}
+	return longSpan;
+}
+
+//operators
+
+const Span& Span::operator=(const Span& other) {
+	return *this;
 }
 
 //exceptions
