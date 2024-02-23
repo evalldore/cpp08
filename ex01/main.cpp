@@ -5,8 +5,8 @@ int main(void) {
 
 	Span s1(10);
 
-	/*for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++) {
 		s1.addNumber(i);
-	}*/
-
+	}
+	std::cout << s1 << std::endl;
 }

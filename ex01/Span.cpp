@@ -38,8 +38,8 @@ unsigned int Span::shortestSpan(void) {
 	unsigned int shortSpan = UINT32_MAX;
 	unsigned int distAbs;
 	std::list<int>::iterator ptr[2];
-	for (ptr[0] = _list.begin(); ptr[0] < _list.end(); ptr[0]++) {
-		for (ptr[1] = _list.begin(); ptr[1] < _list.end(); ptr[1]++) {
+	for (ptr[0] = _list.begin(); ptr[0] != _list.end(); ptr[0]++) {
+		for (ptr[1] = _list.begin(); ptr[1] != _list.end(); ptr[1]++) {
 			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
 			if (distAbs < shortSpan)
 				shortSpan = distAbs;
@@ -56,8 +56,8 @@ unsigned int	Span::longestSpan(void) {
 	unsigned int longSpan = 0;
 	unsigned int distAbs;
 	std::list<int>::iterator ptr[2];
-	for (ptr[0] = _list.begin(); ptr[0] < _list.end(); ptr[0]++) {
-		for (ptr[1] = _list.begin(); ptr[1] < _list.end(); ptr[1]++) {
+	for (ptr[0] = _list.begin(); ptr[0] != _list.end(); ptr[0]++) {
+		for (ptr[1] = _list.begin(); ptr[1] != _list.end(); ptr[1]++) {
 			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
 			if (distAbs > longSpan)
 				longSpan = distAbs;
@@ -69,6 +69,7 @@ unsigned int	Span::longestSpan(void) {
 //operators
 
 const Span& Span::operator=(const Span& other) {
+	(void)other;
 	return *this;
 }
 
@@ -80,7 +81,7 @@ const char* Span::InvalidNumbersException::what(void) const throw() {
 
 //ostream
 
-std::ostream& operator<<(std::ostream& out, const Span& span) {
-	out << "span" << std::endl;
+std::ostream& operator<<(std::ostream& out, Span& span) {
+	out << "Shortest: " << span.shortestSpan() << ' ' << "Longest: " << span.longestSpan();
 	return out;
 }

@@ -30,4 +30,4 @@ class Span {
 		const Span& operator=(const Span& other);
 };
 
-std::ostream& operator <<(std::ofstream&, const Span&);
+std::ostream& operator<<(std::ostream&, Span&);
