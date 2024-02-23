@@ -53,7 +53,7 @@ unsigned int	Span::longestSpan(void) {
 		throw InvalidNumbersException();
 		return 0;
 	}
-	int longSpan = 0;
+	unsigned int longSpan = 0;
 	unsigned int distAbs;
 	std::list<int>::iterator ptr[2];
 	for (ptr[0] = _list.begin(); ptr[0] < _list.end(); ptr[0]++) {
