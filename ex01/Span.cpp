@@ -28,7 +28,7 @@ void Span::addNumber(int num) {
 	_list.push_back(num);
 }
 
-static void iterList(std::list<int>& list, unsigned int &num, int(*func)(unsigned int, unsigned int)) {
+static void iterList(std::list<int>& list, unsigned int &num, int(*func)(const unsigned int&, const unsigned int&)) {
 	unsigned int distAbs;
 	std::list<int>::iterator ptr[2];
 	for (ptr[0] = list.begin(); ptr[0] != list.end(); ptr[0]++) {
@@ -41,12 +41,12 @@ static void iterList(std::list<int>& list, unsigned int &num, int(*func)(unsigne
 	}
 }
 
-static int isGreater(unsigned int curr, unsigned int check) {
-	return (curr < check);
+static int isGreater(const unsigned int& lhs, const unsigned int& rhs) {
+	return (lhs < rhs);
 }
 
-static int isLesser(unsigned int curr, unsigned int check) {
-	return (curr > check);
+static int isLesser(const unsigned int& lhs, const unsigned int& rhs) {
+	return (lhs > rhs);
 }
 
 unsigned int Span::shortestSpan(void) {
