@@ -1,3 +1,4 @@
+#include <functional>
 #include "Span.hpp"
 
 //constructors/destructors
@@ -27,20 +28,32 @@ void Span::addNumber(int num) {
 	_list.push_back(num);
 }
 
+static void iterList(std::list<int>& list, unsigned int &num, int(*func)(unsigned int, unsigned int)) {
+	unsigned int distAbs;
+	std::list<int>::iterator ptr[2];
+	for (ptr[0] = list.begin(); ptr[0] != list.end(); ptr[0]++) {
+		for (ptr[1] = list.begin(); ptr[1] != list.end(); ptr[1]++) {
+			if (ptr[0] == ptr[1]) continue;
+			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
+			if (func(num, distAbs))
+				num = distAbs;
+		}
+	}
+}
+
+static int isGreater(unsigned int curr, unsigned int check) {
+	return (curr < check);
+}
+
+static int isLesser(unsigned int curr, unsigned int check) {
+	return (curr > check);
+}
+
 unsigned int Span::shortestSpan(void) {
 	if (_list.size() < 2)
 		throw InvalidNumbersException();
 	unsigned int shortSpan = std::numeric_limits<unsigned int>::max();
-	unsigned int distAbs;
-	std::list<int>::iterator ptr[2];
-	for (ptr[0] = _list.begin(); ptr[0] != _list.end(); ptr[0]++) {
-		for (ptr[1] = _list.begin(); ptr[1] != _list.end(); ptr[1]++) {
-			if (ptr[0] == ptr[1]) continue;
-			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
-			if (distAbs < shortSpan)
-				shortSpan = distAbs;
-		}
-	}
+	iterList(_list, shortSpan, isLesser);
 	if (shortSpan == std::numeric_limits<unsigned int>::max())
 		throw NoSpanException();
 	return shortSpan;
@@ -50,16 +63,7 @@ unsigned int	Span::longestSpan(void) {
 	if (_list.size() < 2)
 		throw InvalidNumbersException();
 	unsigned int longSpan = 0;
-	unsigned int distAbs;
-	std::list<int>::iterator ptr[2];
-	for (ptr[0] = _list.begin(); ptr[0] != _list.end(); ptr[0]++) {
-		for (ptr[1] = _list.begin(); ptr[1] != _list.end(); ptr[1]++) {
-			if (ptr[0] == ptr[1]) continue;
-			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
-			if (distAbs > longSpan)
-				longSpan = distAbs;
-		}
-	}
+	iterList(_list, longSpan, isGreater);
 	if (longSpan == 0)
 		throw NoSpanException();
 	return longSpan;
