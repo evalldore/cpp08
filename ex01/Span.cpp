@@ -1,6 +1,3 @@
-#include <iostream>
-#include <limits.h>
-#include <cstdlib>
 #include "Span.hpp"
 
 //constructors/destructors
@@ -33,7 +30,7 @@ void Span::addNumber(int num) {
 unsigned int Span::shortestSpan(void) {
 	if (_list.size() < 2)
 		throw InvalidNumbersException();
-	unsigned int shortSpan = UINT_MAX;
+	unsigned int shortSpan = std::numeric_limits<unsigned int>::max();
 	unsigned int distAbs;
 	std::list<int>::iterator ptr[2];
 	for (ptr[0] = _list.begin(); ptr[0] != _list.end(); ptr[0]++) {
@@ -44,7 +41,7 @@ unsigned int Span::shortestSpan(void) {
 				shortSpan = distAbs;
 		}
 	}
-	if (shortSpan == UINT_MAX)
+	if (shortSpan == std::numeric_limits<unsigned int>::max())
 		throw NoSpanException();
 	return shortSpan;
 }

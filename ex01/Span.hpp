@@ -2,6 +2,8 @@
 #include <exception>
 #include <list>
 #include <iostream>
+#include <limits>
+#include <cstdlib>
 class Span {
 	private:
 		std::list<int>		_list;
