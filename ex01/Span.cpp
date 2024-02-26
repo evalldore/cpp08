@@ -2,30 +2,26 @@
 #include "Span.hpp"
 
 //constructors/destructors
-Span::Span(void): _size(0) {
+Span::Span(void): _size(0) {}
 
-}
+Span::~Span(void){}
 
-Span::~Span(void){
-
-}
-
-Span::Span(unsigned int size): _size(size) {
-	
-}
+Span::Span(unsigned int size): _size(size) {}
 
 Span::Span(const Span& other): _size(other._size) {
-	
+	*this = other;
 }
 
 //methods
 
 void Span::addNumber(int num) {
-	if (_list.size() >= _size) {
-		throw InvalidNumbersException();
-		return;
-	}
+	if (_list.size() >= _size) throw InvalidNumbersException();
 	_list.push_back(num);
+}
+
+void Span::addNumber(IT& begin, IT& end) {
+	if (_list.size() + std::distance(begin, end) > _size) throw InvalidNumbersException();
+	_list.insert(_list.end(), begin, end);
 }
 
 static void iterList(std::list<int>& list, unsigned int &num, int(*func)(const unsigned int&, const unsigned int&)) {
@@ -50,29 +46,32 @@ static int isLesser(const unsigned int& lhs, const unsigned int& rhs) {
 }
 
 unsigned int Span::shortestSpan(void) {
-	if (_list.size() < 2)
-		throw InvalidNumbersException();
+	if (_list.size() < 2) throw InvalidNumbersException();
 	unsigned int shortSpan = std::numeric_limits<unsigned int>::max();
 	iterList(_list, shortSpan, isLesser);
-	if (shortSpan == std::numeric_limits<unsigned int>::max())
-		throw NoSpanException();
+	if (shortSpan == std::numeric_limits<unsigned int>::max()) throw NoSpanException();
 	return shortSpan;
 }
 
 unsigned int	Span::longestSpan(void) {
-	if (_list.size() < 2)
-		throw InvalidNumbersException();
+	if (_list.size() < 2) throw InvalidNumbersException();
 	unsigned int longSpan = 0;
 	iterList(_list, longSpan, isGreater);
-	if (longSpan == 0)
-		throw NoSpanException();
+	if (longSpan == 0) throw NoSpanException();
 	return longSpan;
+}
+
+unsigned int	Span::getSize(void) {
+	return (_size);
 }
 
 //operators
 
 const Span& Span::operator=(const Span& other) {
-	(void)other;
+	if (&other == this) return *this;
+	_list.clear();
+	_size = other._size;
+	_list = other._list;
 	return *this;
 }
 
@@ -89,6 +88,6 @@ const char* Span::NoSpanException::what(void) const throw() {
 //ostream
 
 std::ostream& operator<<(std::ostream& out, Span& span) {
-	out << "Shortest: " << span.shortestSpan() << ' ' << "Longest: " << span.longestSpan();
+	out << "Size: " << span.getSize() << ' ' << "Shortest: " << span.shortestSpan() << ' ' << "Longest: " << span.longestSpan();
 	return out;
 }

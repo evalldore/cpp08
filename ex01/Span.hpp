@@ -6,8 +6,9 @@
 #include <cstdlib>
 class Span {
 	private:
+		typedef std::list<int>::iterator IT;
 		std::list<int>		_list;
-		const unsigned int	_size;
+		unsigned int		_size;
 
 		Span(void);
 	public:
@@ -24,9 +25,11 @@ class Span {
 		~Span(void);
 
 		//methods
-		void			addNumber(int num);
+		void			addNumber(int);
+		void			addNumber(IT&, IT&);
 		unsigned int	shortestSpan(void);
 		unsigned int	longestSpan(void);
+		unsigned int	getSize(void);
 		
 		//operators
 		const Span& operator=(const Span& other);

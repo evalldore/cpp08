@@ -8,7 +8,9 @@ int main(void) {
 	sp.addNumber(17);
 	sp.addNumber(9);
 	sp.addNumber(11);
-	std::cout << sp.shortestSpan() << std::endl;
-	std::cout << sp.longestSpan() << std::endl;
+
+	Span sp2 = Span(sp);
+	std::cout << sp << std::endl;
+	std::cout << sp2 << std::endl;
 	return 0;
 }
