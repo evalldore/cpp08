@@ -1,5 +1,5 @@
 #include <iostream>
-#include <limits>
+#include <limits.h>
 #include <cstdlib>
 #include "Span.hpp"
 
@@ -31,38 +31,40 @@ void Span::addNumber(int num) {
 }
 
 unsigned int Span::shortestSpan(void) {
-	if (_list.size() < 2) {
+	if (_list.size() < 2)
 		throw InvalidNumbersException();
-		return 0;
-	}
-	unsigned int shortSpan = UINT32_MAX;
+	unsigned int shortSpan = UINT_MAX;
 	unsigned int distAbs;
 	std::list<int>::iterator ptr[2];
 	for (ptr[0] = _list.begin(); ptr[0] != _list.end(); ptr[0]++) {
 		for (ptr[1] = _list.begin(); ptr[1] != _list.end(); ptr[1]++) {
+			if (ptr[0] == ptr[1]) continue;
 			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
 			if (distAbs < shortSpan)
 				shortSpan = distAbs;
 		}
 	}
+	if (shortSpan == UINT_MAX)
+		throw NoSpanException();
 	return shortSpan;
 }
 
 unsigned int	Span::longestSpan(void) {
-	if (_list.size() < 2) {
+	if (_list.size() < 2)
 		throw InvalidNumbersException();
-		return 0;
-	}
 	unsigned int longSpan = 0;
 	unsigned int distAbs;
 	std::list<int>::iterator ptr[2];
 	for (ptr[0] = _list.begin(); ptr[0] != _list.end(); ptr[0]++) {
 		for (ptr[1] = _list.begin(); ptr[1] != _list.end(); ptr[1]++) {
+			if (ptr[0] == ptr[1]) continue;
 			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
 			if (distAbs > longSpan)
 				longSpan = distAbs;
 		}
 	}
+	if (longSpan == 0)
+		throw NoSpanException();
 	return longSpan;
 }
 
@@ -77,6 +79,10 @@ const Span& Span::operator=(const Span& other) {
 
 const char* Span::InvalidNumbersException::what(void) const throw() {
 	return "Invalid amount of numbers";
+}
+
+const char* Span::NoSpanException::what(void) const throw() {
+	return "No span in the list";
 }
 
 //ostream
