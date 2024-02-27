@@ -25,7 +25,6 @@ static void subject(void) {
 	std::stack<int> s(mstack);
 }
 
-int main()
-{
+int main(void) {
 	subject();
 }
