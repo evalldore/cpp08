@@ -4,7 +4,9 @@
 //constructors/destructors
 Span::Span(void): _size(0) {}
 
-Span::~Span(void){}
+Span::~Span(void){
+	std::cout << this << " destroyed!" << std::endl;
+}
 
 Span::Span(unsigned int size): _size(size) {}
 
@@ -31,7 +33,7 @@ static void iterList(std::list<int>& list, unsigned int &num, int(*func)(const u
 		for (ptr[1] = list.begin(); ptr[1] != list.end(); ptr[1]++) {
 			if (ptr[0] == ptr[1]) continue;
 			distAbs = (unsigned int)abs(*ptr[0] - *ptr[1]);
-			if (func(num, distAbs))
+			if (func(num, distAbs) && distAbs != 0)
 				num = distAbs;
 		}
 	}
