@@ -1,6 +1,7 @@
 */bin/
 easy
 span
+mutant
 a.out
 .vscode
 .DS_Store
